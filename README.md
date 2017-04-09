@@ -1,7 +1,8 @@
 friedsilicon.com
 ====
-
 Landing page, created using hexo, and published using surge.
+
+[![Build Status](https://travis-ci.org/shiva/friedsilicon.svg?branch=master)](https://travis-ci.org/shiva/friedsilicon)
 
 Instructions
 -----
