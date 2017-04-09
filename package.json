@@ -8,7 +8,7 @@
   "scripts": {
     "generate": "hexo generate",
     "clean": "hexo clean",
-    "deploy": "cd public && surge -d friedsilicon.com"
+    "deploy": "surge --project public --domain friedsilicon.com"
   },
   "dependencies": {
     "hexo": "^3.2.0",
