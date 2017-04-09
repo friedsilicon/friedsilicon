@@ -1,5 +1,8 @@
 language: node_js
 node_js:
-    - "0.12"
+- '0.12'
 after_success:
-    - npm run deploy
+- npm run deploy
+notifications:
+  slack:
+    secure: UTRq9/q+5S3CZ3lfZkvvRavTOGLYyvmNxDl3Yt6QOjGnc0Y+I1SRhBi5vNQF3eR4EfJJZeN5IR/U78CUn2TfbO4qPJz5IRBt1LD0BnsyHBTiVPoqRX167EbieDVTE6PoMTqgxzoSu3TABdsCDE02HaqC+aa8GSHhRyjZJoN6uDQS4fdgJASyZ/x6I+VTzY1mRkx6OUjoN2ZaSf7WzI5eX4jek6hkvt/QRcmPkB7Vr7J3oqG4dAAM+ogw0/DzrMfEw9SQnZGER5tD1gWuYvjsqdwd1mrFkSgdk2sYJhEsBvHsJUxeR8xZqHMB+LTYenG0oIisJbOt1nHlkT+IgwZ6Y9aEiZn3wCLOcNJV7wq8rKUuKXXXQqkajmqHudRx01ztZNVtuvcUtPxlDb2u6CHy3n8rmVSnwF9CwW6VSClBw6EDFhZ2UUiGgPX3TTSkuuinGj8XZ/fvL0GvnaaOif/JGnUhqLDbhEn7vePlpKAn/jWXE1hXhZ1JvfrK5TTh+iQ8VDifTxhnPpDx0XqvSspAFMJpyxj1/QOQMC9aBvB8Nu2lvfoWWHVi4rTL/RYs/zsKZYhmMbVu/54lWoMNNr7nbyxYZ1NkSwsuj1dLjhRtPM9ZxXfFwpcAoGnT//nfn7CDSqGiNrlJcy25fu3DxLrcf+mIhMjWuQuv66Crqoc+fbE=
