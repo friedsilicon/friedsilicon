@@ -7,6 +7,7 @@
   },
   "scripts": {
     "generate": "hexo generate",
+    "test": "npm run generate",
     "clean": "hexo clean",
     "deploy": "surge --project public --domain friedsilicon.com"
   },
