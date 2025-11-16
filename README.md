@@ -8,17 +8,17 @@ Getting Started
 -----
 
 ### Prerequisites
-This project uses Node.js. We recommend using a Node.js version manager like fnm or nvm.
+This project uses Node.js 20+ and Hexo 8. We recommend using a Node.js version manager like fnm or nvm.
 
 #### Install and use the correct Node.js version
 ```bash
 # Using fnm
-fnm install 12
-fnm use 12
+fnm install 20
+fnm use 20
 
 # Or using nvm
-nvm install 12
-nvm use 12
+nvm install 20
+nvm use 20
 ```
 
 ### Setup Instructions
