@@ -1,61 +1,43 @@
 ---
-title: Home
-layout: landing
-permalink: /
+title: Fried Silicon
+layout: page
 ---
 
-# Welcome to Fried Silicon
+# Fried Silicon
 
-## Building the Future of In-Memory Computing
+Engineering-first tools for developers who care about **speed**, **schemas**, and **local-first software**.
 
-Discover our revolutionary new product that's changing how developers work with high-performance databases and real-time data processing.
-
-### 🚀 Introducing Our Latest Innovation
-
-**Coming Soon** - A game-changing solution for modern data challenges.
-
-[Get Early Access](#cta) {.cta-button}
+We build **SilicaDB** — a local-first data engine for AI-native apps — and a small family of tools and experiments around structured data and performance.
 
 ---
 
-## Why Choose Fried Silicon?
+## What I’m working on
 
-### ⚡ Lightning Fast Performance
-Built for speed with cutting-edge in-memory architecture.
+### [SilicaDB →](/silicadb/)
 
-### 🔧 Developer-First Design  
-Intuitive APIs and comprehensive documentation.
+A single-file data engine that combines:
 
-### 🛡️ Enterprise Ready
-Scalable, secure, and production-tested.
+- Structured data (tables, documents, events)
+- Vectors and embeddings
+- Schema registry (SODL)
+- Semantic search
+- Optional sync
 
----
-
-## Our Current Projects
-
-### FDB - In-Memory Database
-High-performance database engine optimized for real-time applications.
-
-[View on GitLab](https://gitlab.com/friedsilicon/fdb) {.secondary-button}
+All in one portable file you embed directly into your app.
 
 ---
 
-## Ready to Get Started? {#cta}
+## Writing
 
-Join thousands of developers already using Fried Silicon solutions.
+I also write about technology, product, AI, and whatever I’m experimenting with.
 
-**🎯 Limited Early Access Available**
-
-Get exclusive access to our upcoming product launch, complete with:
-- ✅ Beta testing privileges
-- ✅ Direct feedback channel with our team  
-- ✅ Special launch pricing
-- ✅ Priority support
-
-[Request Early Access](mailto:hello@friedsilicon.com?subject=Early%20Access%20Request) {.cta-button-primary}
-
-[Learn More About FDB](/about) {.secondary-button}
+[See all posts →](/writing/)
 
 ---
 
-*Ready to revolutionize your data stack? Let's build the future together.*
+## About
+
+I’m Shivanand (“Shiva”), a principal PM / systems nerd living in North Vancouver.  
+I like local-first software, compilers, golf, and building unnecessarily ambitious tools.
+
+[More about me →](/about/)
