@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en" data-theme="ember" data-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SilicaDB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Base tokens */
+    :root {
+      --color-bg: #ffffff;
+      --color-surface: #ffffff;
+      --color-primary: #000000;
+      --color-primary-soft: #000000;
+      --color-text: #111111;
+      --color-text-muted: #555555;
+      --color-border: #DDDDDD;
+      --color-accent: #888888;
+      --color-code-bg: #111111;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      --transition-fast: 0.18s ease-out;
+    }
+    /* ---------- THEME 1: SOLARIZED EMBER (warm, earthy) ---------- */
+    :root[data-theme="ember"][data-mode="light"] {
+      --color-bg: #F2E9D8;
+      --color-surface: #FFFFFF;
+      --color-primary: #D9822B;
+      --color-primary-soft: #E6B450;
+      --color-text: #322F2B;
+      --color-text-muted: #6F6052;
+      --color-border: #E0D4C2;
+      --color-accent: #A48F7A;
+      --color-code-bg: #1E1B18;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="ember"][data-mode="dark"] {
+      --color-bg: #1E1B18;
+      --color-surface: #2C2621;
+      --color-primary: #E6B450;
+      --color-primary-soft: #D9822B;
+      --color-text: #F2E9D8;
+      --color-text-muted: #CBBBA5;
+      --color-border: #4A4036;
+      --color-accent: #A48F7A;
+      --color-code-bg: #14110F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 2: PASTEL APRICOT (soft, pastel) ---------- */
+    :root[data-theme="apricot"][data-mode="light"] {
+      --color-bg: #FFF2E0;
+      --color-surface: #FFFFFF;
+      --color-primary: #FFB38A;
+      --color-primary-soft: #FFC8A2;
+      --color-text: #6B4F45;
+      --color-text-muted: #8A6A5F;
+      --color-border: #F0D8C8;
+      --color-accent: #F497B6;
+      --color-code-bg: #2B201D;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="apricot"][data-mode="dark"] {
+      --color-bg: #2B201D;
+      --color-surface: #3A2924;
+      --color-primary: #FFC8A2;
+      --color-primary-soft: #FFB38A;
+      --color-text: #FFF2E0;
+      --color-text-muted: #E5C1B0;
+      --color-border: #5C3F36;
+      --color-accent: #F497B6;
+      --color-code-bg: #1A1311;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 3: SAGE TERRA (earth + muted cool) ---------- */
+    :root[data-theme="terra"][data-mode="light"] {
+      --color-bg: #E6E0D4;
+      --color-surface: #FFFFFF;
+      --color-primary: #D26B47;
+      --color-primary-soft: #F09A6B;
+      --color-text: #3A2B26;
+      --color-text-muted: #6E5B52;
+      --color-border: #D4C7BA;
+      --color-accent: #6F8F7A;
+      --color-code-bg: #222019;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="terra"][data-mode="dark"] {
+      --color-bg: #211C17;
+      --color-surface: #302620;
+      --color-primary: #F09A6B;
+      --color-primary-soft: #D26B47;
+      --color-text: #EADFD1;
+      --color-text-muted: #C9B8AA;
+      --color-border: #524339;
+      --color-accent: #7CA18A;
+      --color-code-bg: #18140F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- GLOBAL UI STYLES ---------- */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: var(--font-sans); background: var(--color-bg); color: var(--color-text); transition: background 0.25s ease, color 0.25s ease; }
+    .page { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-logo { width: 32px; height: 32px; border-radius: 10px; background: radial-gradient(circle at 30% 25%, var(--color-primary-soft), var(--color-primary)); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18); }
+    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .brand-text .title { font-weight: 650; font-size: 1.1rem; letter-spacing: 0.03em; text-transform: uppercase; }
+    .brand-text .subtitle { font-size: 0.8rem; color: var(--color-text-muted); }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    nav a { font-size: 0.9rem; text-decoration: none; color: var(--color-text-muted); padding-bottom: 2px; border-bottom: 1px solid transparent; transition: color var(--transition-fast), border-color var(--transition-fast); }
+    nav a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+    .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .select { padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-size: 0.8rem; }
+    .theme-toggle { background: transparent; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-text); padding: 0.15rem 0.75rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.35rem; cursor: pointer; transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.08s ease; }
+    .theme-toggle:hover { background: rgba(0, 0, 0, 0.03); transform: translateY(-1px); }
+    .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.78rem; margin-bottom: 0.75rem; }
+    [data-mode="dark"] .badge { background: rgba(0, 0, 0, 0.2); }
+    .hero { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr); gap: 2.25rem; padding: 2rem 2rem 2.25rem; border-radius: 24px; background: var(--color-surface); box-shadow: var(--shadow-soft); border: 1px solid var(--color-border); margin-bottom: 2.5rem; }
+    .hero-title { font-size: clamp(2rem, 3vw, 2.6rem); margin: 0 0 0.75rem; letter-spacing: -0.03em; }
+    .hero-highlight { background: linear-gradient(90deg, var(--color-primary), var(--color-primary-soft)); -webkit-background-clip: text; color: transparent; }
+    .hero-subtitle { margin: 0; font-size: 0.98rem; color: var(--color-text-muted); line-height: 1.6; max-width: 34rem; }
+    .hero-actions { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn-primary { background: var(--color-primary); color: #FFF8F0; padding: 0.65rem 1.3rem; border-radius: 999px; border: none; font-size: 0.95rem; font-weight: 550; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); transition: background var(--transition-fast), transform 0.09s ease, box-shadow var(--transition-fast); }
+    .btn-primary:hover { background: var(--color-primary-soft); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18); }
+    .btn-secondary { background: transparent; color: var(--color-text); padding: 0.6rem 1.1rem; border-radius: 999px; border: 1px dashed var(--color-border); font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: border-color var(--transition-fast), background var(--transition-fast), transform 0.08s ease; }
+    .btn-secondary:hover { border-style: solid; border-color: var(--color-primary-soft); background: rgba(0, 0, 0, 0.02); transform: translateY(-1px); }
+    .hero-note { font-size: 0.78rem; color: var(--color-text-muted); margin-top: 0.4rem; }
+    .hero-card { border-radius: 20px; background: var(--color-bg); padding: 1.1rem 1.2rem; border: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 0.7rem; }
+    .chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; background: rgba(0, 0, 0, 0.04); color: var(--color-text-muted); border-radius: 999px; font-size: 0.75rem; }
+    [data-mode="dark"] .chip { background: rgba(255, 255, 255, 0.06); }
+    .hero-card h3 { margin: 0; font-size: 1rem; }
+    .hero-list { list-style: none; padding: 0; margin: 0.3rem 0 0.6rem; font-size: 0.85rem; color: var(--color-text-muted); }
+    .hero-list li { display: flex; gap: 0.35rem; margin-bottom: 0.25rem; }
+    .hero-metric-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.4rem; }
+    .hero-metric { flex: 1; min-width: 120px; border-radius: 12px; padding: 0.5rem 0.7rem; background: var(--color-surface); border: 1px solid var(--color-border); font-size: 0.78rem; }
+    .hero-metric .label { color: var(--color-text-muted); margin-bottom: 0.15rem; }
+    .hero-metric .value { font-weight: 560; }
+    main { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1.25fr); gap: 2.25rem; align-items: start; }
+    @media (max-width: 860px) { .hero, main { grid-template-columns: 1fr; } }
+    section { margin-bottom: 2.5rem; }
+    .section-title { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .section-subtitle { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.2rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .card { padding: 1rem; border-radius: var(--radius-lg); background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04); transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast); }
+    .card:hover { transform: translateY(-2px); border-color: var(--color-primary-soft); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08); }
+    .card h3 { font-size: 0.95rem; margin-top: 0; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.84rem; color: var(--color-text-muted); margin: 0; }
+    .pricing { padding: 1rem; border-radius: var(--radius-lg); background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06); }
+    .pricing h3 { margin-top: 0; margin-bottom: 0.5rem; }
+    .price { font-size: 1.4rem; font-weight: 650; margin: 0.1rem 0 0.4rem; }
+    .price span { font-size: 0.9rem; font-weight: 400; color: var(--color-text-muted); }
+    .pricing ul { padding-left: 1rem; margin: 0 0 0.8rem; font-size: 0.86rem; color: var(--color-text-muted); }
+    .pricing-note { font-size: 0.8rem; color: var(--color-text-muted); }
+    pre { background: var(--color-code-bg); color: #F2E9D8; padding: 0.9rem; border-radius: var(--radius-md); font-size: 0.8rem; overflow-x: auto; border: 1px solid rgba(0, 0, 0, 0.4); margin: 0.25rem 0 0.9rem; }
+    code { font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .kw { color: #E6B450; }
+    .str { color: #F2BF97; }
+    .cmd { color: #FFDD9B; }
+    .form-card { border-radius: var(--radius-lg); padding: 1rem 1.1rem; background: var(--color-surface); border: 1px dashed var(--color-border); }
+    .form-card label { font-size: 0.82rem; margin-bottom: 0.25rem; display: block; }
+    .form-card input[type="email"] { width: 100%; max-width: 320px; padding: 0.55rem 0.6rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); font-size: 0.86rem; margin-bottom: 0.5rem; background: transparent; color: var(--color-text); }
+    .form-card input[type="email"]::placeholder { color: var(--color-text-muted); }
+    .form-card button { background: var(--color-accent); color: #FFF8F0; border-radius: 999px; padding: 0.45rem 0.9rem; border: none; font-size: 0.84rem; cursor: pointer; transition: background var(--transition-fast), transform 0.08s ease, box-shadow var(--transition-fast); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12); }
+    .form-card button:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16); }
+    footer { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--color-border); font-size: 0.78rem; color: var(--color-text-muted); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+    footer a { color: var(--color-text-muted); text-decoration: none; border-bottom: 1px dotted transparent; transition: border-color var(--transition-fast), color var(--transition-fast); }
+    footer a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+    .llm-section pre { white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="title">SilicaDB</div>
+          <div class="subtitle">Local-first data engine · Theme demo</div>
+        </div>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/silicadb/index.html">SilicaDB</a>
+        <a href="/sodl/index.html">SODL</a>
+        <div class="controls">
+          <select id="themeSelect" class="select">
+            <option value="ember">Solarized Ember</option>
+            <option value="apricot">Pastel Apricot</option>
+            <option value="terra">Sage Terra</option>
+          </select>
+          <button class="theme-toggle" id="modeToggle" type="button">
+            <span id="modeIcon" aria-hidden="true">🌒</span>
+            <span id="modeLabel">Dark mode</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="badge">
+            <span>●</span>
+            <span>Early access · Founding users</span>
+          </div>
+          <h1 class="hero-title">
+            A <span class="hero-highlight">single-file</span> data engine
+            for AI-native apps.
+          </h1>
+          <p class="hero-subtitle">
+            SilicaDB stores structured data, embeddings, events and schemas in one local-first format.
+            No more gluing SQLite, vector stores and JSON together. Your app’s entire brain, embedded.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" type="button">
+              Pre-order PRO for $29 <span aria-hidden="true">→</span>
+            </button>
+            <button class="btn-secondary" type="button">
+              View schema &amp; API example
+            </button>
+          </div>
+          <div class="hero-note">
+            Refundable while in validation. No lock-in, no spam.
+          </div>
+        </div>
+        <aside class="hero-card">
+          <div class="chip">What SilicaDB stores</div>
+          <h3>One file, many shapes</h3>
+          <ul class="hero-list">
+            <li><span>▸</span><span>Relational tables: users, sessions, metrics</span></li>
+            <li><span>▸</span><span>Documents &amp; events for app state</span></li>
+            <li><span>▸</span><span>Embeddings &amp; vectors for AI search</span></li>
+            <li><span>▸</span><span>Schemas for type-safe codegen</span></li>
+          </ul>
+          <div class="hero-metric-row">
+            <div class="hero-metric">
+              <div class="label">Designed for</div>
+              <div class="value">AI apps, tools, games, agents</div>
+            </div>
+            <div class="hero-metric">
+              <div class="label">Data model</div>
+              <div class="value">Local-first · zero-copy</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+      <section id="features">
+        <h2 class="section-title">Why SilicaDB instead of a pile of services?</h2>
+        <p class="section-subtitle">
+          Replace SQLite + Firestore + Chroma + JSON schemas with a single, embeddable engine in your app.
+        </p>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Local-first</h3>
+            <p>Embed SilicaDB directly into mobile, desktop, CLI or edge apps. Reads and writes in microseconds, even offline.</p>
+          </article>
+          <article class="card">
+            <h3>AI-native</h3>
+            <p>Store embeddings alongside structured data. Query with filters and semantics without bolting on a separate vector DB.</p>
+          </article>
+          <article class="card">
+            <h3>Schema-aware</h3>
+            <p>Define your shapes once in SODL, then generate Rust, TypeScript or Python types automatically.</p>
+          </article>
+          <article class="card">
+            <h3>Minimal ops</h3>
+            <p>Start with a single file on disk. Add sync later only if you need it. No servers or brokers required by default.</p>
+          </article>
+        </div>
+      </section>
+      <section id="pricing">
+        <h2 class="section-title">Early pricing (validation only)</h2>
+        <p class="section-subtitle">
+          This isn’t the final model. It’s here to see if devs care enough to back SilicaDB.
+        </p>
+        <div class="pricing">
+          <h3>Founding User · PRO</h3>
+          <p class="price">
+            $29 <span>one-time, fully refundable</span>
+          </p>
+          <ul>
+            <li>Lifetime PRO license for the SilicaDB toolkit</li>
+            <li>Early access builds as they’re ready</li>
+            <li>Private feedback channel &amp; priority replies</li>
+            <li>Optional mention on the “Founding Users” page</li>
+          </ul>
+          <p class="pricing-note">
+            If this doesn’t ship or doesn’t fit your needs, you can get a refund. No drama.
+          </p>
+        </div>
+      </section>
+      <section id="dev">
+        <h2 class="section-title">Developer experience</h2>
+        <p class="section-subtitle">
+          Three palettes: warm solarized, pastel-friendly, and earth + sage for a cooler, more balanced option.
+        </p>
+        <pre><code><span class="cmd">$</span> <span class="kw">silica</span> init app.sdb
+<span class="cmd">$</span> <span class="kw">silica</span> schema add user.sodl
+<span class="cmd">$</span> <span class="kw">silica</span> insert data.json
+<span class="cmd">$</span> <span class="kw">silica</span> search <span class="str">"users who had billing issues this week"</span></code></pre>
+        <div class="form-card">
+          <label for="email">Join the early access list</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+          <button type="button">Notify me</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div>© Fried Silicon · All rights reserved</div>
+      <div>Palette: <span id="currentThemeLabel">Solarized Ember</span> · Mode: <span id="currentModeLabel">Light</span></div>
+    </footer>
+  </div>
+  <script>
+    const themeSelect = document.getElementById('themeSelect');
+    const modeToggle = document.getElementById('modeToggle');
+    const modeIcon = document.getElementById('modeIcon');
+    const modeLabel = document.getElementById('modeLabel');
+    const currentThemeLabel = document.getElementById('currentThemeLabel');
+    const currentModeLabel = document.getElementById('currentModeLabel');
+    const THEME_NAMES = {
+      ember: 'Solarized Ember',
+      apricot: 'Pastel Apricot',
+      terra: 'Sage Terra'
+    };
+    function syncLabels() {
+      const root = document.documentElement;
+      const theme = root.dataset.theme || 'ember';
+      const mode = root.dataset.mode || 'light';
+      currentThemeLabel.textContent = THEME_NAMES[theme] || theme;
+      currentModeLabel.textContent = mode === 'dark' ? 'Dark' : 'Light';
+      modeIcon.textContent = mode === 'dark' ? '🌞' : '🌒';
+      modeLabel.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+      themeSelect.value = theme;
+    }
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      syncLabels();
+    }
+    function toggleMode() {
+      const root = document.documentElement;
+      root.dataset.mode = root.dataset.mode === 'dark' ? 'light' : 'dark';
+      syncLabels();
+    }
+    themeSelect.addEventListener('change', (e) => {
+      setTheme(e.target.value);
+    });
+    modeToggle.addEventListener('click', toggleMode);
+    document.documentElement.dataset.theme = 'ember';
+    document.documentElement.dataset.mode = 'light';
+    syncLabels();
+  </script>
+</body>
+</html>

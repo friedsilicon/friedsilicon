@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="ember" data-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <title>Fried Silicon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="title">Fried Silicon</div>
+          <div class="subtitle">Local-first devtools & experiments</div>
+        </div>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/silicadb/index.html">SilicaDB</a>
+        <a href="/sodl/index.html">SODL</a>
+        <div class="controls">
+          <select id="themeSelect" class="select">
+            <option value="ember">Solarized Ember</option>
+            <option value="apricot">Pastel Apricot</option>
+            <option value="terra">Sage Terra</option>
+          </select>
+          <button class="theme-toggle" id="modeToggle" type="button">
+            <span id="modeIcon" aria-hidden="true">🌒</span>
+            <span id="modeLabel">Dark mode</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="badge">
+            <span>●</span>
+            <span>Products</span>
+          </div>
+          <h1 class="hero-title">
+            Welcome to <span class="hero-highlight">Fried Silicon</span>
+          </h1>
+          <p class="hero-subtitle">
+            Building tools for local-first, AI-native apps. Explore our products:
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="/silicadb/index.html">View SilicaDB Product Page →</a>
+            <a class="btn-secondary" href="/sodl/index.html">Learn about SODL</a>
+          </div>
+          <div class="hero-note">
+            All pages use the same theme system. Try switching palettes and dark mode!
+          </div>
+        </div>
+        <aside class="hero-card">
+          <div class="chip">Featured</div>
+          <h3>Our Projects</h3>
+          <ul class="hero-list">
+            <li><span>▸</span><span><a href="/silicadb/index.html">SilicaDB</a>: Local-first, AI-native data engine</span></li>
+            <li><span>▸</span><span><a href="/sodl/index.html">SODL</a>: Structured Object Definition Language</span></li>
+          </ul>
+        </aside>
+      </section>
+    </main>
+    <footer>
+      <div>© Fried Silicon · All rights reserved</div>
+      <div>Palette: <span id="currentThemeLabel">Solarized Ember</span> · Mode: <span id="currentModeLabel">Light</span></div>
+    </footer>
+  </div>
+  <script src="/js/theme.js"></script>
+</body>
+</html>

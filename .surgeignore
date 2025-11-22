@@ -1,0 +1,21 @@
+# Ignore config, build, and dev files for Surge deployment
+.travis.yml
+package.json
+package-lock.json
+yarn.lock
+node_modules/
+README.md
+_config.yml
+.nvmrc
+scaffolds/
+themes/
+source/
+*.log
+*.tmp
+*.bak
+*.DS_Store
+.git/
+.gitignore
+.vscode/
+
+# Add more patterns as needed for your project

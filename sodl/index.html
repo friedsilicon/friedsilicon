@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-theme="ember" data-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SODL: Structured Object Definition Language</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="title">Fried Silicon</div>
+          <div class="subtitle">Local-first devtools & experiments</div>
+        </div>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/silicadb/index.html">SilicaDB</a>
+        <a href="/sodl/index.html">SODL</a>
+        <div class="controls">
+          <select id="themeSelect" class="select">
+            <option value="ember">Solarized Ember</option>
+            <option value="apricot">Pastel Apricot</option>
+            <option value="terra">Sage Terra</option>
+          </select>
+          <button class="theme-toggle" id="modeToggle" type="button">
+            <span id="modeIcon" aria-hidden="true">🌒</span>
+            <span id="modeLabel">Dark mode</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="badge">
+            <span>●</span>
+            <span>SODL</span>
+          </div>
+          <h2 class="hero-title">SODL: Structured Object Definition Language</h2>
+          <p class="hero-subtitle">A declarative language for describing data structure, relationships, and constraints.</p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="/silicadb/index.html">View SilicaDB Product Page →</a>
+            <a class="btn-secondary" href="/index.html">Back to Home</a>
+          </div>
+          <div class="hero-note">Try switching palettes and dark mode!</div>
+        </div>
+        <aside class="hero-card">
+          <div class="chip">Overview</div>
+          <div class="card">
+            <h3>What is SODL?</h3>
+            <p>SODL is a domain-specific language designed for defining data structures, relationships, and constraints in a clear and organized manner. Files written in SODL use the <code>.sodl</code> extension, reflecting the language’s focus on structured object definitions.</p>
+            <ul>
+              <li>Precision in Data Modeling: Fine-grained type system, built-in constraint support, clear relationship modeling</li>
+              <li>Data Integrity: Strong validation, explicit strict/optional field marking, type safety</li>
+              <li>Maintainability: Clear syntax, modular import system, structured relationships</li>
+              <li>Flexibility: Rich type composition, extensible through imports</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>SODL Example</h3>
+            <pre><code>object UserProfile {
+    userId: type = UUID, assigned = counter, required, key;
+    email: type = string, 
+           pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+           required;
+    age: type = uint8, range(13, 120);
+    preferences: type = UserPreferences;
+}
+
+keymap UserProfile:UserAccount {
+    userId -> userId,
+    email -> email
+}, primary, name = "ProfileToAccount";
+</code></pre>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <footer>
+      <div>© Fried Silicon · All rights reserved</div>
+      <div>Palette: <span id="currentThemeLabel">Solarized Ember</span> · Mode: <span id="currentModeLabel">Light</span></div>
+    </footer>
+  </div>
+  <script src="/js/theme.js"></script>
+</body>
+</html>
