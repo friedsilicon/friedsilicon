@@ -258,8 +258,12 @@ footer a:hover { color: var(--color-primary); border-color: var(--color-primary-
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
+}
+.project-icon svg {
+  width: 56px;
+  height: 56px;
 }
 .card-body {
   display: flex;
