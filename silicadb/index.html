@@ -128,10 +128,10 @@
     .btn-secondary:hover { border-style: solid; border-color: var(--color-primary-soft); background: rgba(0, 0, 0, 0.02); transform: translateY(-1px); }
     .hero-note { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.4rem; opacity: 0.9; }
     .hero-card { margin-top: 1.25rem; }
-    .chip { display: inline-block; color: var(--color-text); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .chip { display: inline-block; color: var(--color-text); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
     [data-mode="dark"] .chip { }
     .hero-card h3 { margin: 0 0 0.4rem; font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
-    .hero-list { list-style: none; padding: 0; margin: 0 0 0.75rem; font-size: 0.92rem; color: var(--color-text); line-height: 1.75; }
+    .hero-list { list-style: none; padding: 0; margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--color-text); line-height: 1.75; }
     .hero-list li { display: flex; gap: 0.5rem; margin-bottom: 0.25rem; }
     .hero-metric-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.25rem; font-size: 0.9rem; color: var(--color-text-muted); }
     .hero-metric { font-size: 0.9rem; }
@@ -200,10 +200,6 @@
     <main>
       <section class="hero">
         <div>
-          <div class="badge">
-            <span>●</span>
-            <span>Early access · Founding users</span>
-          </div>
           <h1 class="hero-title">
             A <span class="hero-highlight">single-file</span> data engine
             for AI-native apps.
@@ -213,14 +209,8 @@
           </p>
           <div class="hero-actions">
             <button class="btn-primary" type="button">
-              Pre-order PRO for $29 <span aria-hidden="true">→</span>
+              Pre-order for $99 <span aria-hidden="true">→</span>
             </button>
-            <button class="btn-secondary" type="button">
-              View schema &amp; API example
-            </button>
-          </div>
-          <div class="hero-note">
-            Refundable while in validation. No lock-in, no spam.
           </div>
         </div>
         <aside class="hero-card">
@@ -254,10 +244,6 @@
             <h3>Schema-aware</h3>
             <p>Define your shapes once in SODL, then generate Rust, TypeScript or Python types automatically.</p>
           </article>
-          <article class="card">
-            <h3>Minimal ops</h3>
-            <p>Start with a single file on disk. Add sync later only if you need it. No servers or brokers required by default.</p>
-          </article>
         </div>
       </section>
       <section id="pricing">
@@ -283,9 +269,6 @@
       </section>
       <section id="dev">
         <h2 class="section-title">Developer experience</h2>
-        <p class="section-subtitle">
-          Get started in minutes with the SilicaDB CLI.
-        </p>
         <pre><code><span class="cmd">$</span> <span class="kw">silica</span> init app.sdb
 <span class="cmd">$</span> <span class="kw">silica</span> schema add user.sodl
 <span class="cmd">$</span> <span class="kw">silica</span> insert data.json
