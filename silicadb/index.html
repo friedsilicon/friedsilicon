@@ -128,15 +128,15 @@
     .btn-secondary:hover { border-style: solid; border-color: var(--color-primary-soft); background: rgba(0, 0, 0, 0.02); transform: translateY(-1px); }
     .hero-note { font-size: 0.78rem; color: var(--color-text-muted); margin-top: 0.4rem; }
     .hero-card { margin-top: 1.5rem; }
-    .chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; background: rgba(0, 0, 0, 0.04); color: var(--color-text-muted); border-radius: 999px; font-size: 0.75rem; }
-    [data-mode="dark"] .chip { background: rgba(255, 255, 255, 0.06); }
-    .hero-card h3 { margin: 0; font-size: 1rem; }
-    .hero-list { list-style: none; padding: 0; margin: 0.3rem 0 0.6rem; font-size: 0.85rem; color: var(--color-text-muted); }
-    .hero-list li { display: flex; gap: 0.35rem; margin-bottom: 0.25rem; }
-    .hero-metric-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.4rem; }
-    .hero-metric { flex: 1; min-width: 120px; font-size: 0.78rem; }
-    .hero-metric .label { color: var(--color-text-muted); margin-bottom: 0.15rem; }
-    .hero-metric .value { font-weight: 560; }
+    .chip { display: inline-block; color: var(--color-text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    [data-mode="dark"] .chip { }
+    .hero-card h3 { margin: 0 0 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
+    .hero-list { list-style: none; padding: 0; margin: 0 0 1rem; font-size: 0.88rem; color: var(--color-text-muted); line-height: 1.65; }
+    .hero-list li { display: flex; gap: 0.5rem; margin-bottom: 0.35rem; }
+    .hero-metric-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-muted); }
+    .hero-metric { font-size: 0.85rem; }
+    .hero-metric .label { color: var(--color-text-muted); font-weight: 500; }
+    .hero-metric .value { font-weight: 400; color: var(--color-text); }
     main { max-width: 100%; }
     @media (max-width: 860px) { }
     section { margin-bottom: 2.5rem; }
@@ -226,7 +226,6 @@
         </div>
         <aside class="hero-card">
           <div class="chip">What SilicaDB stores</div>
-          <h3>One file, many shapes</h3>
           <ul class="hero-list">
             <li><span>▸</span><span>Relational tables: users, sessions, metrics</span></li>
             <li><span>▸</span><span>Documents &amp; events for app state</span></li>
@@ -235,12 +234,10 @@
           </ul>
           <div class="hero-metric-row">
             <div class="hero-metric">
-              <div class="label">Designed for</div>
-              <div class="value">AI apps, tools, games, agents</div>
+              <span class="label">Designed for:</span> <span class="value">AI apps, tools, games, agents</span>
             </div>
             <div class="hero-metric">
-              <div class="label">Data model</div>
-              <div class="value">Local-first · zero-copy</div>
+              <span class="label">Data model:</span> <span class="value">Local-first · zero-copy</span>
             </div>
           </div>
         </aside>
@@ -293,7 +290,7 @@
       <section id="dev">
         <h2 class="section-title">Developer experience</h2>
         <p class="section-subtitle">
-          Three palettes: warm solarized, pastel-friendly, and earth + sage for a cooler, more balanced option.
+          Get started in minutes with the SilicaDB CLI.
         </p>
         <pre><code><span class="cmd">$</span> <span class="kw">silica</span> init app.sdb
 <span class="cmd">$</span> <span class="kw">silica</span> schema add user.sodl
