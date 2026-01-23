@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" data-theme="ember" data-mode="light">
+<head>
+  <meta charset="utf-8" />
+  <title>ActivityLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Base tokens */
+    :root {
+      --color-bg: #ffffff;
+      --color-surface: #ffffff;
+      --color-primary: #000000;
+      --color-primary-soft: #000000;
+      --color-text: #111111;
+      --color-text-muted: #555555;
+      --color-border: #DDDDDD;
+      --color-accent: #888888;
+      --color-code-bg: #111111;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      --transition-fast: 0.18s ease-out;
+    }
+    /* ---------- THEME 1: SOLARIZED EMBER (warm, earthy) ---------- */
+    :root[data-theme="ember"][data-mode="light"] {
+      --color-bg: #F2E9D8;
+      --color-surface: #FFFFFF;
+      --color-primary: #D9822B;
+      --color-primary-soft: #E6B450;
+      --color-text: #322F2B;
+      --color-text-muted: #6F6052;
+      --color-border: #E0D4C2;
+      --color-accent: #A48F7A;
+      --color-code-bg: #1E1B18;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="ember"][data-mode="dark"] {
+      --color-bg: #1E1B18;
+      --color-surface: #2C2621;
+      --color-primary: #E6B450;
+      --color-primary-soft: #D9822B;
+      --color-text: #F2E9D8;
+      --color-text-muted: #CBBBA5;
+      --color-border: #4A4036;
+      --color-accent: #A48F7A;
+      --color-code-bg: #14110F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 2: PASTEL APRICOT (soft, pastel) ---------- */
+    :root[data-theme="apricot"][data-mode="light"] {
+      --color-bg: #FFF2E0;
+      --color-surface: #FFFFFF;
+      --color-primary: #FFB38A;
+      --color-primary-soft: #FFC8A2;
+      --color-text: #6B4F45;
+      --color-text-muted: #8A6A5F;
+      --color-border: #F0D8C8;
+      --color-accent: #F497B6;
+      --color-code-bg: #2B201D;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="apricot"][data-mode="dark"] {
+      --color-bg: #2B201D;
+      --color-surface: #3A2924;
+      --color-primary: #FFC8A2;
+      --color-primary-soft: #FFB38A;
+      --color-text: #FFF2E0;
+      --color-text-muted: #E5C1B0;
+      --color-border: #5C3F36;
+      --color-accent: #F497B6;
+      --color-code-bg: #1A1311;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 3: SAGE TERRA (earth + muted cool) ---------- */
+    :root[data-theme="terra"][data-mode="light"] {
+      --color-bg: #E6E0D4;
+      --color-surface: #FFFFFF;
+      --color-primary: #D26B47;
+      --color-primary-soft: #F09A6B;
+      --color-text: #3A2B26;
+      --color-text-muted: #6E5B52;
+      --color-border: #D4C7BA;
+      --color-accent: #6F8F7A;
+      --color-code-bg: #222019;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="terra"][data-mode="dark"] {
+      --color-bg: #211C17;
+      --color-surface: #302620;
+      --color-primary: #F09A6B;
+      --color-primary-soft: #D26B47;
+      --color-text: #EADFD1;
+      --color-text-muted: #C9B8AA;
+      --color-border: #524339;
+      --color-accent: #7CA18A;
+      --color-code-bg: #18140F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- GLOBAL UI STYLES ---------- */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: var(--font-sans); background: var(--color-bg); color: var(--color-text); transition: background 0.25s ease, color 0.25s ease; }
+    .page { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-logo { width: 32px; height: 32px; border-radius: 10px; background: radial-gradient(circle at 30% 25%, var(--color-primary-soft), var(--color-primary)); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18); }
+    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .brand-text .title { font-weight: 650; font-size: 1.1rem; letter-spacing: 0.03em; text-transform: uppercase; }
+    .brand-text .subtitle { font-size: 0.8rem; color: var(--color-text-muted); }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    nav a { font-size: 0.9rem; text-decoration: none; color: var(--color-text-muted); padding-bottom: 2px; border-bottom: 1px solid transparent; transition: color var(--transition-fast), border-color var(--transition-fast); }
+    nav a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+    .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .select { padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-size: 0.8rem; }
+    .theme-toggle { background: transparent; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-text); padding: 0.15rem 0.75rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.35rem; cursor: pointer; transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.08s ease; }
+    .theme-toggle:hover { background: rgba(0, 0, 0, 0.03); transform: translateY(-1px); }
+    .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.78rem; margin-bottom: 0.75rem; }
+    [data-mode="dark"] .badge { background: rgba(0, 0, 0, 0.2); }
+    .product-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .product-icon { display: flex; align-items: center; justify-content: center; }
+    .product-name { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--color-text); }
+    .hero { padding: 2rem 2rem 2.25rem; border-radius: 24px; background: var(--color-surface); box-shadow: var(--shadow-soft); border: 1px solid var(--color-border); margin-bottom: 2.5rem; }
+    .hero-title { font-size: clamp(2rem, 3vw, 2.6rem); margin: 0 0 0.75rem; letter-spacing: -0.03em; font-weight: 600; line-height: 1.2; }
+    .hero-highlight { background: linear-gradient(90deg, var(--color-primary), var(--color-primary-soft)); -webkit-background-clip: text; color: transparent; }
+    .hero-subtitle { margin: 0; font-size: 1.05rem; color: var(--color-text-muted); line-height: 1.7; }
+    .hero-actions { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn-primary { background: var(--color-primary); color: #FFF8F0; padding: 0.65rem 1.3rem; border-radius: 999px; border: none; font-size: 0.95rem; font-weight: 550; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); transition: background var(--transition-fast), transform 0.09s ease, box-shadow var(--transition-fast); text-decoration: none; }
+    .btn-primary:hover { background: var(--color-primary-soft); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18); }
+    .btn-secondary { background: transparent; color: var(--color-text); padding: 0.6rem 1.1rem; border-radius: 999px; border: 1px dashed var(--color-border); font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: border-color var(--transition-fast), background var(--transition-fast), transform 0.08s ease; text-decoration: none; }
+    .btn-secondary:hover { border-style: solid; border-color: var(--color-primary-soft); background: rgba(0, 0, 0, 0.02); transform: translateY(-1px); }
+    .hero-note { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.4rem; opacity: 0.9; }
+    .hero-card { margin-top: 1.25rem; }
+    .chip { display: inline-block; color: var(--color-text); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    [data-mode="dark"] .chip { }
+    .hero-card h3 { margin: 0 0 0.4rem; font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
+    .hero-list { list-style: none; padding: 0; margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--color-text); line-height: 1.75; }
+    .hero-list li { display: flex; gap: 0.5rem; margin-bottom: 0.25rem; }
+    .hero-metric-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.25rem; font-size: 0.9rem; color: var(--color-text-muted); }
+    .hero-metric { font-size: 0.9rem; }
+    .hero-metric .label { color: var(--color-text-muted); font-weight: 500; }
+    .hero-metric .value { font-weight: 400; color: var(--color-text); }
+    main { max-width: 100%; }
+    @media (max-width: 860px) { }
+    section { margin-bottom: 2.5rem; }
+    .section-title { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .section-subtitle { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.2rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .card { padding: 1rem; border-radius: var(--radius-lg); background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04); transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast); }
+    .card:hover { transform: translateY(-2px); border-color: var(--color-primary-soft); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08); }
+    .card h3 { font-size: 0.95rem; margin-top: 0; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.84rem; color: var(--color-text-muted); margin: 0; }
+    .pricing { margin-top: 0.5rem; }
+    .pricing h3 { margin-top: 0; margin-bottom: 0.5rem; }
+    .price { font-size: 1.4rem; font-weight: 650; margin: 0.1rem 0 0.4rem; }
+    .price span { font-size: 0.9rem; font-weight: 400; color: var(--color-text-muted); }
+    .pricing ul { padding-left: 1rem; margin: 0 0 0.8rem; font-size: 0.86rem; color: var(--color-text-muted); }
+    .pricing-note { font-size: 0.8rem; color: var(--color-text-muted); }
+    footer { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--color-border); font-size: 0.78rem; color: var(--color-text-muted); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+    footer a { color: var(--color-text-muted); text-decoration: none; border-bottom: 1px dotted transparent; transition: border-color var(--transition-fast), color var(--transition-fast); }
+    footer a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="title">Fried Silicon</div>
+          <div class="subtitle">Local-first devtools & experiments</div>
+        </div>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/silicadb/index.html">SilicaDB</a>
+        <a href="/sodl/index.html">SODL</a>
+        <div class="controls">
+          <select id="themeSelect" class="select">
+            <option value="ember">Solarized Ember</option>
+            <option value="apricot">Pastel Apricot</option>
+            <option value="terra">Sage Terra</option>
+          </select>
+          <button class="theme-toggle" id="modeToggle" type="button">
+            <span id="modeIcon" aria-hidden="true">🌒</span>
+            <span id="modeLabel">Dark mode</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="product-brand">
+          <div class="product-icon" aria-hidden="true">
+            <img src="/activitylog/icon.svg" width="48" height="48" alt="ActivityLog icon" style="display: block;" />
+          </div>
+          <h1 class="product-name">ActivityLog</h1>
+        </div>
+        <div>
+          <h1 class="hero-title">
+            Track your <span class="hero-highlight">workouts</span> and activities.
+          </h1>
+          <p class="hero-subtitle">
+            A simple iOS app for logging fitness activities and personal goals.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="https://apps.apple.com/activitylog" target="_blank" rel="noopener">
+              Download on App Store <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <div class="chip">Everything you need to stay active</div>
+          <ul class="hero-list">
+            <li><span>▸</span><span>Quick logging — capture duration, distance, intensity, and notes</span></li>
+            <li><span>▸</span><span>Custom activities — running, cycling, yoga, or anything you track</span></li>
+            <li><span>▸</span><span>Activity history — view progress with filtering and search</span></li>
+            <li><span>▸</span><span>Simple interface — no distractions, just your activities</span></li>
+          </ul>
+          <div class="hero-metric-row">ActivityLog helps you stay consistent with your fitness goals. Track what matters to you without unnecessary complexity.
+          </div>
+        </aside>
+      </section>
+      <section id="features">
+        <h2 class="section-title">Why ActivityLog?</h2>
+        <p class="section-subtitle">
+          A focused fitness tracker that gets out of your way.
+        </p>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Simple & Fast</h3>
+            <p>Log activities in seconds. No complex features, no distractions. Just quick entry forms that don't waste your time.</p>
+          </article>
+          <article class="card">
+            <h3>Progress Tracking</h3>
+            <p>View your activity history over time. Filter by date, activity type, or search for specific workouts to see your progress.</p>
+          </article>
+          <article class="card">
+            <h3>Custom Activities</h3>
+            <p>Track any activity type. Create custom categories with their own icons and tracking fields tailored to your lifestyle.</p>
+          </article>
+        </div>
+      </section>
+      <section id="pricing">
+        <h2 class="section-title">Download</h2>
+        <p class="section-subtitle">
+          ActivityLog is free to download on the App Store.
+        </p>
+          <ul>
+            <li>Unlimited activity logging</li>
+            <li>Custom activity types with icons</li>
+            <li>History and progress tracking</li>
+            <li>Clean, distraction-free interface</li>
+          </ul>
+          <p class="pricing-note">
+            No subscriptions required.
+          </p>
+      </section>
+    </main>
+    <footer>
+      <div>© Fried Silicon · All rights reserved</div>
+      <div>Palette: <span id="currentThemeLabel">Solarized Ember</span> · Mode: <span id="currentModeLabel">Light</span></div>
+    </footer>
+  </div>
+  <script>
+    const themeSelect = document.getElementById('themeSelect');
+    const modeToggle = document.getElementById('modeToggle');
+    const modeIcon = document.getElementById('modeIcon');
+    const modeLabel = document.getElementById('modeLabel');
+    const currentThemeLabel = document.getElementById('currentThemeLabel');
+    const currentModeLabel = document.getElementById('currentModeLabel');
+    const THEME_NAMES = {
+      ember: 'Solarized Ember',
+      apricot: 'Pastel Apricot',
+      terra: 'Sage Terra'
+    };
+    function syncLabels() {
+      const root = document.documentElement;
+      const theme = root.dataset.theme || 'ember';
+      const mode = root.dataset.mode || 'light';
+      currentThemeLabel.textContent = THEME_NAMES[theme] || theme;
+      currentModeLabel.textContent = mode === 'dark' ? 'Dark' : 'Light';
+      modeIcon.textContent = mode === 'dark' ? '🌞' : '🌒';
+      modeLabel.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+      themeSelect.value = theme;
+    }
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      syncLabels();
+    }
+    function toggleMode() {
+      const root = document.documentElement;
+      root.dataset.mode = root.dataset.mode === 'dark' ? 'light' : 'dark';
+      syncLabels();
+    }
+    themeSelect.addEventListener('change', (e) => {
+      setTheme(e.target.value);
+    });
+    modeToggle.addEventListener('click', toggleMode);
+    document.documentElement.dataset.theme = 'ember';
+    document.documentElement.dataset.mode = 'light';
+    syncLabels();
+  </script>
+</body>
+</html>
