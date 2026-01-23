@@ -117,6 +117,9 @@
     .theme-toggle:hover { background: rgba(0, 0, 0, 0.03); transform: translateY(-1px); }
     .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: rgba(255, 255, 255, 0.4); border: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.78rem; margin-bottom: 0.75rem; }
     [data-mode="dark"] .badge { background: rgba(0, 0, 0, 0.2); }
+    .product-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .product-icon { display: flex; align-items: center; justify-content: center; }
+    .product-name { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--color-text); }
     .hero { padding: 2rem 2rem 2.25rem; border-radius: 24px; background: var(--color-surface); box-shadow: var(--shadow-soft); border: 1px solid var(--color-border); margin-bottom: 2.5rem; }
     .hero-title { font-size: clamp(2rem, 3vw, 2.6rem); margin: 0 0 0.75rem; letter-spacing: -0.03em; font-weight: 600; line-height: 1.2; }
     .hero-highlight { background: linear-gradient(90deg, var(--color-primary), var(--color-primary-soft)); -webkit-background-clip: text; color: transparent; }
@@ -199,6 +202,12 @@
     </header>
     <main>
       <section class="hero">
+        <div class="product-brand">
+          <div class="product-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="18" cy="8" rx="12" ry="5" fill="#E6B450"/><ellipse cx="18" cy="28" rx="12" ry="5" fill="#D9822B"/><rect x="6" y="8" width="24" height="20" rx="12" fill="#F2E9D8"/></svg>
+          </div>
+          <h1 class="product-name">SilicaDB</h1>
+        </div>
         <div>
           <h1 class="hero-title">
             A <span class="hero-highlight">single-file</span> data engine
