@@ -99,25 +99,5 @@
     </footer>
   </div>
   <script src="/js/theme.js"></script>
-  <script>
-    // Dropdown menu functionality
-    document.querySelectorAll('.nav-dropdown > button').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.currentTarget.parentElement.classList.toggle('open');
-      });
-    });
-    // Close dropdown when a link is clicked
-    document.querySelectorAll('.dropdown-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-      });
-    });
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.nav-dropdown')) {
-        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-      }
-    });
-  </script>
 </body>
 </html>

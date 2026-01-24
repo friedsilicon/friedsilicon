@@ -35,3 +35,19 @@ modeToggle.addEventListener('click', toggleMode);
 document.documentElement.dataset.theme = 'ember';
 document.documentElement.dataset.mode = 'light';
 syncLabels();
+// Dropdown menu functionality
+document.querySelectorAll('.nav-dropdown > button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    e.currentTarget.parentElement.classList.toggle('open');
+  });
+});
+document.querySelectorAll('.dropdown-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  });
+});
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
