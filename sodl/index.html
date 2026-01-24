@@ -4,7 +4,151 @@
   <meta charset="utf-8" />
   <title>SODL: Structured Object Definition Language</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/css/theme.css">
+  <style>
+    /* Base tokens */
+    :root {
+      --color-bg: #ffffff;
+      --color-surface: #ffffff;
+      --color-primary: #000000;
+      --color-primary-soft: #000000;
+      --color-text: #111111;
+      --color-text-muted: #555555;
+      --color-border: #DDDDDD;
+      --color-accent: #888888;
+      --color-code-bg: #111111;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      --transition-fast: 0.18s ease-out;
+    }
+    /* ---------- THEME 1: SOLARIZED EMBER (warm, earthy) ---------- */
+    :root[data-theme="ember"][data-mode="light"] {
+      --color-bg: #F2E9D8;
+      --color-surface: #FFFFFF;
+      --color-primary: #D9822B;
+      --color-primary-soft: #E6B450;
+      --color-text: #322F2B;
+      --color-text-muted: #6F6052;
+      --color-border: #E0D4C2;
+      --color-accent: #A48F7A;
+      --color-code-bg: #1E1B18;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="ember"][data-mode="dark"] {
+      --color-bg: #1E1B18;
+      --color-surface: #2C2621;
+      --color-primary: #E6B450;
+      --color-primary-soft: #D9822B;
+      --color-text: #F2E9D8;
+      --color-text-muted: #CBBBA5;
+      --color-border: #4A4036;
+      --color-accent: #A48F7A;
+      --color-code-bg: #14110F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 2: PASTEL APRICOT (soft, pastel) ---------- */
+    :root[data-theme="apricot"][data-mode="light"] {
+      --color-bg: #FFF2E0;
+      --color-surface: #FFFFFF;
+      --color-primary: #FFB38A;
+      --color-primary-soft: #FFC8A2;
+      --color-text: #6B4F45;
+      --color-text-muted: #8A6A5F;
+      --color-border: #F0D8C8;
+      --color-accent: #F497B6;
+      --color-code-bg: #2B201D;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="apricot"][data-mode="dark"] {
+      --color-bg: #2B201D;
+      --color-surface: #3A2924;
+      --color-primary: #FFC8A2;
+      --color-primary-soft: #FFB38A;
+      --color-text: #FFF2E0;
+      --color-text-muted: #E5C1B0;
+      --color-border: #5C3F36;
+      --color-accent: #F497B6;
+      --color-code-bg: #1A1311;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- THEME 3: SAGE TERRA (earth + muted cool) ---------- */
+    :root[data-theme="terra"][data-mode="light"] {
+      --color-bg: #E6E0D4;
+      --color-surface: #FFFFFF;
+      --color-primary: #D26B47;
+      --color-primary-soft: #F09A6B;
+      --color-text: #3A2B26;
+      --color-text-muted: #6E5B52;
+      --color-border: #D4C7BA;
+      --color-accent: #6F8F7A;
+      --color-code-bg: #222019;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="terra"][data-mode="dark"] {
+      --color-bg: #211C17;
+      --color-surface: #302620;
+      --color-primary: #F09A6B;
+      --color-primary-soft: #D26B47;
+      --color-text: #EADFD1;
+      --color-text-muted: #C9B8AA;
+      --color-border: #524339;
+      --color-accent: #7CA18A;
+      --color-code-bg: #18140F;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    /* ---------- GLOBAL UI STYLES ---------- */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: var(--font-sans); background: var(--color-bg); color: var(--color-text); transition: background 0.25s ease, color 0.25s ease; }
+    .page { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-logo { width: 32px; height: 32px; border-radius: 10px; background: radial-gradient(circle at 30% 25%, var(--color-primary-soft), var(--color-primary)); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18); }
+    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .brand-text .title { font-weight: 650; font-size: 1.1rem; letter-spacing: 0.03em; text-transform: uppercase; }
+    .brand-text .subtitle { font-size: 0.8rem; color: var(--color-text-muted); }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    nav a { font-size: 0.9rem; text-decoration: none; color: var(--color-text-muted); padding-bottom: 2px; border-bottom: 1px solid transparent; transition: color var(--transition-fast), border-color var(--transition-fast); }
+    nav a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+    .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .select { padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-size: 0.8rem; }
+    .theme-toggle { background: transparent; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-text); padding: 0.15rem 0.75rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.35rem; cursor: pointer; transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.08s ease; }
+    .theme-toggle:hover { background: rgba(0, 0, 0, 0.03); transform: translateY(-1px); }
+    .product-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .product-icon { display: flex; align-items: center; justify-content: center; }
+    .product-name { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--color-text); }
+    .hero { padding: 2rem 2rem 2.25rem; border-radius: 24px; background: var(--color-surface); box-shadow: var(--shadow-soft); border: 1px solid var(--color-border); margin-bottom: 2.5rem; }
+    .hero-title { font-size: clamp(2rem, 3vw, 2.6rem); margin: 0 0 0.75rem; letter-spacing: -0.03em; font-weight: 600; line-height: 1.2; }
+    .hero-highlight { background: linear-gradient(90deg, var(--color-primary), var(--color-primary-soft)); -webkit-background-clip: text; color: transparent; }
+    .hero-subtitle { margin: 0; font-size: 1.05rem; color: var(--color-text-muted); line-height: 1.7; }
+    .hero-actions { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn-primary { background: var(--color-primary); color: #FFF8F0; padding: 0.65rem 1.3rem; border-radius: 999px; border: none; font-size: 0.95rem; font-weight: 550; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); transition: background var(--transition-fast), transform 0.09s ease, box-shadow var(--transition-fast); text-decoration: none; }
+    .btn-primary:hover { background: var(--color-primary-soft); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18); }
+    .btn-secondary { background: transparent; color: var(--color-text); padding: 0.6rem 1.1rem; border-radius: 999px; border: 1px dashed var(--color-border); font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: border-color var(--transition-fast), background var(--transition-fast), transform 0.08s ease; text-decoration: none; }
+    .btn-secondary:hover { border-style: solid; border-color: var(--color-primary-soft); background: rgba(0, 0, 0, 0.02); transform: translateY(-1px); }
+    .hero-card { margin-top: 1.25rem; }
+    .chip { display: inline-block; color: var(--color-text); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .hero-list { list-style: none; padding: 0; margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--color-text); line-height: 1.75; }
+    .hero-list li { display: flex; gap: 0.5rem; margin-bottom: 0.25rem; }
+    .hero-metric-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.25rem; font-size: 0.9rem; color: var(--color-text-muted); }
+    section { margin-bottom: 2.5rem; }
+    .section-title { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .section-subtitle { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.2rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .card { padding: 1rem; border-radius: var(--radius-lg); background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04); transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast); }
+    .card:hover { transform: translateY(-2px); border-color: var(--color-primary-soft); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08); }
+    .card h3 { font-size: 0.95rem; margin-top: 0; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.84rem; color: var(--color-text-muted); margin: 0; }
+    pre { background: var(--color-code-bg); color: #F2E9D8; padding: 0.9rem; border-radius: var(--radius-md); font-size: 0.8rem; overflow-x: auto; border: 1px solid rgba(0, 0, 0, 0.4); margin: 0.25rem 0 0.9rem; }
+    code { font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .kw { color: #E6B450; }
+    .str { color: #F2BF97; }
+    .ty { color: #7CA18A; }
+    footer { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--color-border); font-size: 0.78rem; color: var(--color-text-muted); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+    footer a { color: var(--color-text-muted); text-decoration: none; border-bottom: 1px dotted transparent; transition: border-color var(--transition-fast), color var(--transition-fast); }
+    footer a:hover { color: var(--color-primary); border-color: var(--color-primary-soft); }
+  </style>
 </head>
 <body>
   <div class="page">
@@ -41,41 +185,88 @@
           </div>
           <h1 class="product-name">SODL</h1>
         </div>
-        <h2 class="hero-title">Structured Object Definition Language</h2>
-        <p class="hero-subtitle">A declarative language for describing data structure, relationships, and constraints.</p>
-        <div class="hero-actions">
-          <a class="btn-primary" href="/silicadb/index.html">View SilicaDB Product Page →</a>
-        </div>
-        <div class="hero-card">
-          <div class="card">
-            <h3>What is SODL?</h3>
-            <p>SODL is a domain-specific language designed for defining data structures, relationships, and constraints in a clear and organized manner. Files written in SODL use the <code>.sodl</code> extension, reflecting the language’s focus on structured object definitions.</p>
-            <ul>
-              <li>Precision in Data Modeling: Fine-grained type system, built-in constraint support, clear relationship modeling</li>
-              <li>Data Integrity: Strong validation, explicit strict/optional field marking, type safety</li>
-              <li>Maintainability: Clear syntax, modular import system, structured relationships</li>
-              <li>Flexibility: Rich type composition, extensible through imports</li>
-            </ul>
+        <div>
+          <h1 class="hero-title">
+            A <span class="hero-highlight">type-safe</span> data modeling language.
+          </h1>
+          <p class="hero-subtitle">
+            Define data structures, relationships, and constraints with precision and clarity.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="https://blog.shiv.me/projects/sodl/" target="_blank" rel="noopener">
+              Read the Spec <span aria-hidden="true">→</span>
+            </a>
+            <a class="btn-secondary" href="https://github.com/friedsilicon/sodl" target="_blank" rel="noopener">
+              View on GitHub
+            </a>
           </div>
         </div>
-        <div class="hero-card">
-          <div class="card">
-            <h3>SODL Example</h3>
-            <pre><code>object UserProfile {
-    userId: type = UUID, assigned = counter, required, key;
-    email: type = string, 
-           pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        <aside class="hero-card">
+          <div class="chip">Language-agnostic schema definitions</div>
+          <ul class="hero-list">
+            <li><span>▸</span><span>Rich type system — precise numeric types, constraints, patterns</span></li>
+            <li><span>▸</span><span>First-class relationships — KeyMaps for explicit data connections</span></li>
+            <li><span>▸</span><span>Built-in validation — range constraints, pattern matching, strict types</span></li>
+            <li><span>▸</span><span>Code generation — Rust, TypeScript, Python types from schemas</span></li>
+          </ul>
+          <div class="hero-metric-row">Use SODL independently for API contracts, with SilicaDB for storage, or with any system needing structured data definitions.</div>
+        </aside>
+      </section>
+      <section id="features">
+        <h2 class="section-title">Why SODL instead of Protobuf or JSON Schema?</h2>
+        <p class="section-subtitle">
+          A purpose-built language for data modeling with relationship support and strong validation.
+        </p>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Relationship Modeling</h3>
+            <p>KeyMaps provide first-class support for defining relationships between data structures. No manual foreign key management.</p>
+          </article>
+          <article class="card">
+            <h3>Precise Types</h3>
+            <p>Fine-grained numeric types (uint8-uint64, int8-int64) with built-in constraints like range() and pattern matching.</p>
+          </article>
+          <article class="card">
+            <h3>Cross-Platform</h3>
+            <p>Write schemas once, generate type-safe code for multiple languages. Works with any database or storage system.</p>
+          </article>
+        </div>
+      </section>
+      <section id="example">
+        <h2 class="section-title">SODL in action</h2>
+        <pre><code><span class="kw">object</span> <span class="ty">UserProfile</span> {
+    userId: <span class="kw">type</span> = <span class="ty">UUID</span>, assigned = counter, required, key;
+    email: <span class="kw">type</span> = <span class="ty">string</span>, 
+           pattern = <span class="str">"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"</span>,
            required;
-    age: type = uint8, range(13, 120);
-    preferences: type = UserPreferences;
+    age: <span class="kw">type</span> = <span class="ty">uint8</span>, range(<span class="str">13</span>, <span class="str">120</span>);
+    preferences: <span class="kw">type</span> = <span class="ty">UserPreferences</span>;
 }
 
-keymap UserProfile:UserAccount {
+<span class="kw">keymap</span> UserProfile:UserAccount {
     userId -> userId,
     email -> email
-}, primary, name = "ProfileToAccount";
-</code></pre>
-          </div>
+}, primary, name = <span class="str">"ProfileToAccount"</span>;</code></pre>
+      </section>
+      <section id="use-cases">
+        <h2 class="section-title">When to choose SODL</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>API Contracts</h3>
+            <p>Define clear data contracts between services with strong type safety and validation rules.</p>
+          </article>
+          <article class="card">
+            <h3>Data Integrity</h3>
+            <p>Systems requiring strict validation rules and complex business constraints around data.</p>
+          </article>
+          <article class="card">
+            <h3>Complex Models</h3>
+            <p>Applications with intricate data relationships that need clear documentation and maintainability.</p>
+          </article>
+          <article class="card">
+            <h3>Enterprise Systems</h3>
+            <p>Projects where data modeling clarity and consistency across teams is critical.</p>
+          </article>
         </div>
       </section>
     </main>
@@ -84,6 +275,44 @@ keymap UserProfile:UserAccount {
       <div>Palette: <span id="currentThemeLabel">Solarized Ember</span> · Mode: <span id="currentModeLabel">Light</span></div>
     </footer>
   </div>
-  <script src="/js/theme.js"></script>
+  <script>
+    const themeSelect = document.getElementById('themeSelect');
+    const modeToggle = document.getElementById('modeToggle');
+    const modeIcon = document.getElementById('modeIcon');
+    const modeLabel = document.getElementById('modeLabel');
+    const currentThemeLabel = document.getElementById('currentThemeLabel');
+    const currentModeLabel = document.getElementById('currentModeLabel');
+    const THEME_NAMES = {
+      ember: 'Solarized Ember',
+      apricot: 'Pastel Apricot',
+      terra: 'Sage Terra'
+    };
+    function syncLabels() {
+      const root = document.documentElement;
+      const theme = root.dataset.theme || 'ember';
+      const mode = root.dataset.mode || 'light';
+      currentThemeLabel.textContent = THEME_NAMES[theme] || theme;
+      currentModeLabel.textContent = mode === 'dark' ? 'Dark' : 'Light';
+      modeIcon.textContent = mode === 'dark' ? '🌞' : '🌒';
+      modeLabel.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+      themeSelect.value = theme;
+    }
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      syncLabels();
+    }
+    function toggleMode() {
+      const root = document.documentElement;
+      root.dataset.mode = root.dataset.mode === 'dark' ? 'light' : 'dark';
+      syncLabels();
+    }
+    themeSelect.addEventListener('change', (e) => {
+      setTheme(e.target.value);
+    });
+    modeToggle.addEventListener('click', toggleMode);
+    document.documentElement.dataset.theme = 'ember';
+    document.documentElement.dataset.mode = 'light';
+    syncLabels();
+  </script>
 </body>
 </html>
